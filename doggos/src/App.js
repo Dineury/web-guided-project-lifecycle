@@ -27,12 +27,20 @@ class App extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-     console.log(prevState)
+    if(prevState.doggos !== this.state.doggos){
+        console.log('The dogs have changed')
+        if(this.state.breed === 'chihuahua') {
+           fetchDogs('husky').then(res=> {
+            this.setState({doggos: res.data.message, breed: 'husky'})
+           }) 
+        }
+    }
     }
 
     searchDogs = dogName => {
         fetchDogs(dogName)
         .then(res => {
+           
             this.setState({doggos: res.data.message, breed: dogName});
         })
     }
